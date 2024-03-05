@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Rock Paper Scissors</title>
+	<link rel="stylesheet" href="app.css">
+</head>
+<body>
+
+<div x-data="app" x-cloak>
+
+	<div x-show="introState">
+		<h2>Rock, Paper, Scissors</h2>
+		<p>
+		In this game, you will chose between rock, paper, or scissors, in a 
+		high stakes action-packed game where anything can happen. 
+		</p>
+		<p>
+		The winner of the game is based on what you choose. 
+		</p>
+		<ul>
+		<li>If you pick rock, and the computer picks paper, you lose!</li>
+		<li>If you pick rock, and the computer picks scissors, you win!</li>
+		<li>If you pick paper, and the computer picks scissors, you lose!</li>
+		<li>If you pick paper, and the computer picks rock, you win!</li>
+		<li>If you pick scissors, and the computer picks rock, you lose!</li>
+		<li>If you pick scissors, and the computer picks paper, you win!</li>
+		</ul>
+		<p>
+		<button @click="startGame">Start Game</button>
+		</p>
+	</div>
+	<div x-show="!introState">
+		<h2>The Game</h2>
+		<p>
+		Choose one of the below:
+		</p>
+		<p>
+		<button @click="playerPicked('rock')">🪨 Rock</button>
+		<button @click="playerPicked('paper')">📃 Paper</button>
+		<button @click="playerPicked('scissors')">✂️ Scissors</button>
+		</p>
+
+		<div x-html="result"></div>
+		
+	</div>
+
+</div>
+
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
