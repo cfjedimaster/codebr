@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "simple-xml-to-json": "^1.2.0"
+  }
+}

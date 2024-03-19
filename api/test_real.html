@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title></title>
+</head>
+<body>
+
+<p>
+i will put stuff here:
+<textarea id="dump"></textarea>
+</p>
+
+<script>
+document.addEventListener('DOMContentLoaded', init, false);
+
+async function init() {
+	//let req = await fetch('https://nasstatus.faa.gov/api/airport-status-information');
+	let req = await fetch('/.netlify/functions/airportinfo');
+	
+	let response = await req.json();
+	console.log('response', response);
+	document.querySelector('#dump').value = response.airportinfo;
+	
+}
+</script>
+
+</body>
+</html>

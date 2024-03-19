@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title></title>
+</head>
+<body>
+
+<h2>Dad Joke API Demo</h2>
+
+<div id="joke"></div>
+
+<script>
+document.addEventListener('DOMContentLoaded', init, false);
+
+async function init() {
+	let req = await fetch('https://icanhazdadjoke.com/', {
+		headers: {
+			'Accept':'application/json'
+		}
+	});
+	let response = await req.json();
+	console.log('response', response);
+	document.querySelector('#joke').innerHTML = response.joke;
+}
+</script>
+
+</body>
+</html>
