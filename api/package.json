@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "fast-xml-parser": "^4.3.6",
     "simple-xml-to-json": "^1.2.0"
   }
 }

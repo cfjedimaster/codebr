@@ -6,10 +6,10 @@
 </head>
 <body>
 
-<p>
-i will put stuff here:
-<textarea id="dump"></textarea>
-</p>
+<h2>Airport Status List</h2>
+
+<div id="results">
+</div>
 
 <script>
 document.addEventListener('DOMContentLoaded', init, false);
@@ -20,8 +20,33 @@ async function init() {
 	
 	let response = await req.json();
 	console.log('response', response);
-	document.querySelector('#dump').value = response.airportinfo;
-	
+	let airportinfo = response.airportinfo;
+
+	//document.querySelector('#dump').value = JSON.stringify(response.airportinfo,null,'\t');
+	let s = '';
+	s = `
+<h2>Updated at: ${airportinfo.updateTime}</h2>
+	`;
+
+
+	for(d of airportinfo.delays) {
+		console.log(d);
+		if(d.Name === 'Airport Closures') {
+			console.log('we care');
+			for(let x=0; x<d.Airport_Closure_List.Airport.length; x++) {
+				let airport = d.Airport_Closure_List.Airport[x];
+				s += `
+<p>
+Airport code: ${airport.ARPT}<br>
+Reason: ${airport.Reason}
+</p>
+				`
+			}
+		}
+	}
+
+
+	document.querySelector('#results').innerHTML = s;
 }
 </script>
 
