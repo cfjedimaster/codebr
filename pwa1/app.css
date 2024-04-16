@@ -1,0 +1,20 @@
+body {
+	background-color: deeppink;
+	color: white;
+	font-family: "Comic Sans MS", "Comic Sans", cursive;
+}
+
+#joke {
+	font-size: 3em;
+}
+
+#jokeBtnContainer {
+	margin-top: 10px;
+	text-align: center;
+}
+
+#jokeBtn {
+	height: 120px;
+	width: 250px;
+	font-size: 2em;
+}
