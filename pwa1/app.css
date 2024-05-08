@@ -2,6 +2,9 @@ body {
 	background-color: deeppink;
 	color: white;
 	font-family: "Comic Sans MS", "Comic Sans", cursive;
+	display: flex;
+	flex-direction: column;
+	min-height: 100svh;
 }
 
 #joke {
@@ -10,18 +13,14 @@ body {
 
 #jokeBtnContainer {
 	text-align: center;
-	position2: absolute;
-	width: 100%;
+	margin-top: auto;
+	margin-block-start: auto;
+	margin-bottom: 1rem;
+	margin-block-end: 1rem;
 }
 
 #jokeBtn {
-	height: 100px;
-	width: 250px;
+	height: 75px;
+	width: 225px;
 	font-size: 2em;
-	display:block;
-	margin: auto;
-	margin-top: 25px;
-	position2: absolute;
-	bottom2: 150px;
-	transform2: translate(-50%, -50%);
 }
