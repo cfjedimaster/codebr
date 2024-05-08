@@ -9,12 +9,19 @@ body {
 }
 
 #jokeBtnContainer {
-	margin-top: 10px;
 	text-align: center;
+	position2: absolute;
+	width: 100%;
 }
 
 #jokeBtn {
-	height: 120px;
+	height: 100px;
 	width: 250px;
 	font-size: 2em;
+	display:block;
+	margin: auto;
+	margin-top: 25px;
+	position2: absolute;
+	bottom2: 150px;
+	transform2: translate(-50%, -50%);
 }
