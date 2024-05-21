@@ -6,7 +6,4 @@ Detect online/offline for Jokes, and use backup
 
 Ray: https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers#recovering_failed_requests
 
-Delatrus Jones
-Bolton
-May 13th, 7PM
-no limits
+
