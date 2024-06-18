@@ -1,0 +1,4 @@
+Recipe:
+	title
+	ingredients
+	directions
