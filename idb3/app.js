@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', init, false);
 
 let db;
-let $titleField, $ingredientsField, $directionsField, $saveRecipeBtn, $recipeListDiv, $recipeIdField, $titleFilterField;
+let $titleField, $durationField, $ingredientsField, $directionsField, $saveRecipeBtn, $recipeListDiv, $recipeIdField, $titleFilterField, $durationFilterField, $ingredientFilterField;
 
 async function init() {
 
@@ -14,6 +14,7 @@ async function init() {
 	$recipeIdField = document.querySelector('#recipeId');
 	$titleFilterField = document.querySelector('#titleFilter');
 	$durationFilterField = document.querySelector('#durationFilter');
+	$ingredientFilterField = document.querySelector('#ingredientFilter');
 
 	db = await getDatabase();
 
@@ -21,6 +22,7 @@ async function init() {
 
 	$titleFilterField.addEventListener('input', renderRecipes);
 	$durationFilterField.addEventListener('input', renderRecipes);
+	$ingredientFilterField.addEventListener('input', renderRecipes);
 
 	renderRecipes();
 }
@@ -109,8 +111,8 @@ async function getRecipe(id) {
 async function getRecipes(filter={}) {
 	return new Promise(async (resolve, reject) => {
 
-		if(!filter.title && !filter.duration) {
-
+		if(!filter.title && !filter.duration && !filter.ingredient) {
+			console.log('Doing the simpler getAll');
 			let transaction = db.transaction(['recipes'],'readonly');
 			transaction.onerror = e => {
 				reject(e);
@@ -135,28 +137,80 @@ async function getRecipes(filter={}) {
 			Get all filtered by duration, if any
 			Return where items in both. 
 
+			Edit: Ok, now we're doing 3. I'm going to regret this.
+
+
 			*/
 
 			let result = [];
-			let byTitle, byDuration;
+			let byTitle = [];
+			let byDuration = [];
+			let byIngredient = [];
 
 			if(filter.title) {
 				byTitle = await searchRecipesByName(filter.title);
 				console.log('byTitle', byTitle);
-				if(byTitle.length === 0) resolve([]);
-				if(!filter.duration) resolve(byTitle);
+				if(byTitle.length === 0) { resolve([]); return; }
+				// can leave early if doing nothing else
+				if(!filter.duration && !filter.ingredient) { resolve(byTitle); return; }
 			}
 
 			if(filter.duration) {
 				byDuration = await searchRecipesByDuration(filter.duration);
 				console.log('byDuration', byDuration);
-				if(byDuration.length === 0) resolve([]);
-				if(!filter.title) resolve(byDuration);
+				if(byDuration.length === 0) { resolve([]); return; }
+				if(!filter.title && !filter.ingredient) { resolve(byDuration); return; }
+			}
+
+			if(filter.ingredient) {
+				byIngredient = await searchRecipesByIngredient(filter.ingredient);
+				console.log('byIngredient', byIngredient);
+				if(byIngredient.length === 0) { resolve([]); return; }
+				if(!filter.title && !filter.duration) resolve(byIngredient);
 			}
 
 			// if we get here, we need to merge
+			/* original
 			for(let t of byTitle) {
 				if(byDuration.find(x => x.id == t.id)) result.push(t);
+			}
+			*/
+
+			/*
+			So, I struggled with the logic of - given we have 2 or 3 arrays, what items exist in ALL 3
+			Idea by @falken on Masto
+			*/
+			let numArrays = 0;
+			if(filter.title) numArrays++;
+			if(filter.duration) numArrays++;
+			if(filter.ingredient) numArrays++;
+			let idBag = {};
+			let obBag = {};
+
+			if(filter.title) {
+				for(t of byTitle) {
+					if(!idBag[t.id]) idBag[t.id] = 1;
+					else idBag[t.id]++;
+					obBag[t.id] = t;
+				}
+			}
+			if(filter.duration) {
+				for(t of byDuration) {
+					if(!idBag[t.id]) idBag[t.id] = 1;
+					else idBag[t.id]++;
+					obBag[t.id] = t;
+				}
+			}
+			if(filter.ingredient) {
+				for(t of byIngredient) {
+					if(!idBag[t.id]) idBag[t.id] = 1;
+					else idBag[t.id]++;
+					obBag[t.id] = t;
+				}
+			}
+
+			for(let id in idBag) {
+				if(idBag[id] === numArrays) result.push(obBag[id]);
 			}
 
 			resolve(result);
@@ -165,6 +219,8 @@ async function getRecipes(filter={}) {
 
 	});
 }
+
+
 
 async function searchRecipesByName(name) {
 	return new Promise((resolve, reject) => {
@@ -178,14 +234,12 @@ async function searchRecipesByName(name) {
 		let store = transaction.objectStore('recipes');
 
 		let index = store.index('recipetitles');
-		let range = IDBKeyRange.bound(name.toLowerCase() + 'a', name.toLowerCase() + 'z');
-		console.log('doing a range', range);
+		let range = IDBKeyRange.bound(name.toLowerCase() + '', name.toLowerCase() + 'z');
 		let result = [];
 
 		index.openCursor(range).onsuccess = (event) => {
 			const cursor = event.target.result;
 			if (cursor) {
-				console.log('got a cursor', cursor);
 				result.push(cursor.value);
 				cursor.continue();
 			} else {
@@ -226,10 +280,40 @@ async function searchRecipesByDuration(duration) {
 	});
 }
 
+async function searchRecipesByIngredient(ingredient) {
+	return new Promise((resolve, reject) => {
+
+		let transaction = db.transaction(['recipes'],'readonly');
+
+		transaction.onerror = e => {
+			reject(e);
+		};
+
+		let store = transaction.objectStore('recipes');
+
+		let index = store.index('recipeingredients');
+		let range = IDBKeyRange.bound(ingredient.toLowerCase() + '', ingredient.toLowerCase() + 'z');
+		let result = [];
+
+		index.openCursor(range).onsuccess = (event) => {
+			const cursor = event.target.result;
+			if (cursor) {
+				console.log('got a cursor', cursor);
+				result.push(cursor.value);
+				cursor.continue();
+			} else {
+				resolve(result);
+			}
+		}
+
+	});
+}
+
 async function renderRecipes() {
 	let filter = {};
 	filter.title = $titleFilterField.value;
-	filter.duration = parseInt($durationFilterField.value,10);
+	if($durationFilterField.value) filter.duration = parseInt($durationFilterField.value,10);
+	filter.ingredient = $ingredientFilterField.value;
 	console.log('will filter with', filter);
 
 	let recipes = await getRecipes(filter);
