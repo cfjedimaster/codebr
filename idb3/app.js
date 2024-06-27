@@ -166,7 +166,7 @@ async function getRecipes(filter={}) {
 				byIngredient = await searchRecipesByIngredient(filter.ingredient);
 				console.log('byIngredient', byIngredient);
 				if(byIngredient.length === 0) { resolve([]); return; }
-				if(!filter.title && !filter.duration) resolve(byIngredient);
+				if(!filter.title && !filter.duration) { resolve(byIngredient); return; }
 			}
 
 			// if we get here, we need to merge
