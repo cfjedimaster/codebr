@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
+	<style>
+	body {
+		padding: 50px;
+	}
+	</style>
+</head>
+<body>
+
+<p>
+<input type="search" placeholder="Type to filter by title" id="titleFilter">
+</p>
+<div id="recipeList">
+
+</div>
+
+<hr>
+
+<div id="recipeForm">
+	<form>
+		<input type="hidden" id="recipeId">
+		<p>
+		<label for="title">
+		Title:
+		</label>
+		<input id="title" type="text">
+		</p>
+
+		<p>
+		<label>
+		Ingredients:
+		</label>
+		</p>
+		<div class="row">
+			<div class="column column-50">
+			<input type="text" id="ing1_name" placeholder="Name">
+			</div>
+			<div class="column column-50">
+			<input type="number" id="ing1_qty" placeholder="Qty">
+			</div>
+		</div>
+		<div class="row">
+			<div class="column column-50">
+			<input type="text" id="ing2_name" placeholder="Name">
+			</div>
+			<div class="column column-50">
+			<input type="number" id="ing2_qty" placeholder="Qty">
+			</div>
+		</div>		
+		<div class="row">
+			<div class="column column-50">
+			<input type="text" id="ing3_name" placeholder="Name">
+			</div>
+			<div class="column column-50">
+			<input type="number" id="ing3_qty" placeholder="Qty">
+			</div>
+		</div>
+		<div class="row">
+			<div class="column column-50">
+			<input type="text" id="ing4_name" placeholder="Name">
+			</div>
+			<div class="column column-50">
+			<input type="number" id="ing4_qty" placeholder="Qty">
+			</div>
+		</div>
+		<div class="row">
+			<div class="column column-50">
+			<input type="text" id="ing5_name" placeholder="Name">
+			</div>
+			<div class="column column-50">
+			<input type="number" id="ing5_qty" placeholder="Qty">
+			</div>
+		</div>
+
+		<p>
+		<label>
+		Directions:
+		</label>
+		</p>
+
+		<p>
+		<input type="text" id="dir1">
+		</p>
+		<p>
+		<input type="text" id="dir2">
+		</p>
+		<p>
+		<input type="text" id="dir3">
+		</p>
+		<p>
+		<input type="text" id="dir4">
+		</p>
+		<p>
+		<input type="text" id="dir5">
+		</p>
+
+		<button id="saveRecipe">Save Recipe</button>
+	</form>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
+	<style>
+	body {
+		padding: 50px;
+	}
+
+	textarea {
+		height: 300px;
+	}
+	</style>
+</head>
+<body>
+
+<div class="row">
+	<div class="column column-50">
+		<input type="search" placeholder="Type to filter by title" id="titleFilter"> 
+	</div>
+	<div class="column column-50">
+		<input type="number" placeholder="Max duration in minutes" id="durationFilter">
+	</div>
+</div>
+
+<div id="recipeList">
+
+</div>
+
+<hr>
+
+<div id="recipeForm">
+	<form>
+		<input type="hidden" id="recipeId">
+
+		<p>
+		<label for="title">
+		Title:
+		</label>
+		<input id="title" type="text">
+		</p>
+
+		<p>
+		<label for="duration">
+		Duration (in minutes):
+		</label>
+		<input id="duration" type="number">
+		</p>
+
+		<p>
+		<label for="ingredients">
+		Ingredients: (Enter one ingredient per line. Use the format: Name, Qty)
+		</label>
+		<textarea id="ingredients">flour, 1 cup
+sugar, 2 cups
+rice, 9 tbsp</textarea>
+		</p>
+
+		<p>
+		<label for="directions">
+		Directions: (Separate steps with a blank link.)
+		</label>
+		<textarea id="directions">one step
+
+two step
+
+three step
+</textarea>
+		</p>
+		<button id="saveRecipe">Save Recipe</button>
+	</form>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
