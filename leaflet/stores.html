@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
+	 <style>
+	 #map { 
+	 	height: 750px;
+		width: 750px;
+		}
+	 </style>
+</head>
+<body>
+
+	<h2>Stores</h2>
+
+	<div id="map"></div>
+
+	<script>
+	document.addEventListener('DOMContentLoaded', init, false);
+	let map;
+
+	async function init() {
+
+		let req = await fetch('./stores.json');
+		let stores = await req.json();
+		console.log(stores);
+
+		//The latitude of Lafayette, LA, USA is 30.216667, and the longitude is -92.033333.
+		map = L.map('map').setView([30.216, -92.033], 8);
+
+		L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+			maxZoom: 19,
+			attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+		}).addTo(map);
+
+		stores.forEach(s => {
+			let marker = L.marker([s.lat, s.lng]).addTo(map);
+			marker.bindPopup(`<h2>Store</h2><p>Name:${s.name}</p>`);
+			marker.on('click', function() {
+				this.openPopup();
+			});
+		});
+	
+		/*
+		for(let i=0;i<stores.length;i++) {
+			let s= stores[i];
+			let marker = L.marker([s.lat, s.lng]).addTo(map);
+			marker.bindPopup(`<h2>Store</h2><p>Name:${s.name}</p>`);
+			marker.on('click', function() {
+				this.openPopup();
+			});
+		}
+		*/
+		/*
+		let marker = L.marker([30.216, -92.033]).addTo(map);
+
+		//marker.bindPopup("Meow").openPopup();
+		marker.bindPopup("Meow");
+
+		marker.on('click', openPopup);
+		*/	
+
+	}
+
+	</script>
+	<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+     crossorigin=""></script>
+</body>
+</html>

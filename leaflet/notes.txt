@@ -1,0 +1,13 @@
+
+
+for next time:
+
+click on marker for park info, using NPS API
+change marker
+instead of marker popup, load HTML to the right
+look for a weather tile API and add it as well (maybe via toggle)
+
+See if leaflet can load N data and set zoom to fit them all in
+	fitbounds(P)
+
+use a weather api specific for park, next 3 days
