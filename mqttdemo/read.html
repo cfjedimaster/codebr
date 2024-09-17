@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title></title>
+</head>
+<body>
+<h1>Read Demo</h1>
+
+<script src="/node_modules/mqtt/dist/mqtt.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', init, false);
+async function init() {
+
+  let HOST = 'wss://rabbitmq.toddrsharp.com/ws';
+  let USER = 'readonly';
+  let PASSWORD = '73HuRYrZ';
+  let TOPIC = '/netlify/updates';
+
+  let client = await mqtt.connectAsync(HOST, {
+    username: USER,
+    password: PASSWORD,
+    protocolId: 'MQIsdp', // important
+    protocolVersion: 3, // important,
+	port: 15676
+  });
+
+  await client.subscribeAsync(TOPIC);
+
+client.on('message', (topic, message) => {
+	console.log('got shit', topic.toString(), message.toString());
+  });
+  console.log('ok i hope');
+  
+
+}
+</script>
+</body>
+</html>
