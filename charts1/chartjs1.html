@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<style>
+#chartWrapper {
+	width: 500px;
+	height: 500px;
+}
+	</style>
+</head>
+<body>
+
+<h2>My Data</h2> 
+<div id="chartWrapper">
+  <canvas id="myChart"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', init, false);
+let sales;
+
+async function init() {
+	let req = await fetch('./data.json');
+	salesData = await req.json();
+
+	chartData = salesData.sales.map(d => {
+		let total = 0;
+		for(let product of d.items) {
+			total += product.total;
+		}
+		return total;
+	});
+
+	chartLabels = salesData.sales.map(d => {
+		return d.date;
+	});
+
+	const ctx = document.getElementById('myChart');
+
+	new Chart(ctx, {
+		type: 'bar',
+		data: {
+		labels: chartLabels,
+		datasets: [{
+			label: 'Total Sales',
+			data: chartData,
+			borderWidth: 1
+		}]
+		},
+		options: {
+		scales: {
+			y: {
+			beginAtZero: true
+			}
+		}
+		}
+	});
+
+
+}
+</script>
+</body>
+</html>

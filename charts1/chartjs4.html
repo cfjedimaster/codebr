@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<style>
+#chartWrapper {
+	width: 500px;
+	height: 500px;
+}
+	</style>
+</head>
+<body>
+
+<h2>My Data</h2> 
+<div id="chartWrapper">
+  <canvas id="myChart"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', init, false);
+let sales;
+
+async function init() {
+	let req = await fetch('./data.json');
+	salesData = await req.json();
+
+	chartLabels = salesData.sales.map(d => {
+		return d.date;
+	});
+
+	chartData = [];
+	let productNames = ['Apples', 'Bananas', 'Cherries', 'Donuts'];
+	for(let p of productNames) {
+		// return the total for p
+		let total = 0;
+		salesData.sales.forEach(d => {
+			for(product of d.items) {
+				if(product.name === p) total += product.total
+			}
+		});
+		//console.log(`total for ${p} is ${total}`);
+		chartData.push(total);
+	}
+
+	console.log('chartData', chartData);
+
+	const ctx = document.getElementById('myChart');
+
+	new Chart(ctx, {
+		type: 'pie',
+		data: {
+			labels: productNames,
+			datasets: [{
+				label: 'Sales',
+				data: chartData,
+				borderWidth: 1
+			}]
+		},
+		options: {
+			plugins: {
+				title: {
+					display: true, 
+					text: "Sales of Products for 2024"
+				}
+			}
+		}
+	});
+
+}
+</script>
+</body>
+</html>
