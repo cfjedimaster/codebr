@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<style>
+	#myChart {
+		width: 800px;
+		height: 500px;
+	}
+	</style>
+</head>
+<body>
+
+<div id="myChart"></div>
+
+<script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', init, false);
+let sales;
+
+async function init() {
+	let req = await fetch('./data.json');
+	salesData = await req.json();
+	let chartData = [];
+
+	for(let i=0;i<salesData.sales.length;i++) {
+
+		let total = 0;
+		for(let product of salesData.sales[i].items) {
+			console.log('wth', product);
+			total += product.total;
+		}
+		console.log(total);
+		chartData.push(total);
+
+	}
+
+	chartLabels = salesData.sales.map(d => {
+		return d.date;
+	});
+
+	console.log(chartData);
+
+  zingchart.render({
+    id: 'myChart',
+    data: {
+		type: 'bar',
+		title: {
+			text: 'Product Sales',
+			fontSize: 24,
+			color: '#5d7d9a'
+		},
+		legend: {
+		},
+		scaleX: {
+			labels: chartLabels
+			},
+		series: [
+			{ text: 'Sales Per Month', values: chartData }
+		]
+    }
+  });
+
+}
+</script>
+</body>
+</html>
