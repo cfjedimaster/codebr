@@ -1,0 +1,14 @@
+Stuff to Do
+
+Add CSS/JS support
+Add date formatting
+_data, site wide data
+extracts
+an archive page showing pagination
+rss 
+
+permalink change?
+
+
+
+https://cfjedimaster.github.io/eleventy-blog-guide/guide.html

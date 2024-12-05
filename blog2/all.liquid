@@ -1,0 +1,23 @@
+---
+layout: main
+title: The Cat Blog - All the Posts 
+pagination:
+  data: collections.post
+  size: 5
+  alias: posts
+  reverse: true
+---
+
+<h2>Everything</h2>
+
+<ul>
+{%- for post in posts -%}
+  <li><a href="{{ post.url}}">{{ post.data.title }} ({{ post.data.date | niceDate }})</a></li>
+{%- endfor -%}
+</ul>
+
+<nav aria-labelledby="my-pagination">
+{%- for pageEntry in pagination.pages %}
+<a href="{{ pagination.hrefs[ forloop.index0 ] }}"{% if page.url == pagination.hrefs[ forloop.index0 ] %} aria-current="page"{% endif %}>Page {{ forloop.index }}</a> {% unless forloop.last %}-{% endunless -%}
+{%- endfor %}
+</nav>
