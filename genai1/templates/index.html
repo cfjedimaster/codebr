@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title></title>
+</head>
+<body>
+
+<h1>Resume Reviewer</h1>
+
+<p>
+<label for="file">Select your resume: </label>
+<input type="file" id="file" name="file" accept=".pdf" />
+</p>
+
+<button id="submit">Review</button>
+
+<div id="results"></div>
+
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
