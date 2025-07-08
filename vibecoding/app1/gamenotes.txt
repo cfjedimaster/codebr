@@ -1,0 +1,4 @@
+Maze Game
+
+Web app that generates a randomized maze (of a set size), places a player character (@) in the start of the maze, 
+marks an exit (+), and then lets the player use keyboard controls to navigate the maze.
