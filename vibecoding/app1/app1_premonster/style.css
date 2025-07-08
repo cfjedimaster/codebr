@@ -1,0 +1,51 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #222;
+    color: #fff;
+    text-align: center;
+}
+#maze-container {
+    display: inline-block;
+    margin-top: 20px;
+    border: 2px solid #b22222;
+    box-sizing: content-box;
+    border-radius: 4px;
+}
+.maze-row {
+    display: flex;
+}
+.maze-cell {
+    width: 32px;
+    height: 32px;
+    border: 1px solid #444;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2em;
+    background: #333;
+}
+.wall {
+    background-color: #b22222;
+    background-image:
+        linear-gradient(90deg, #fff 2px, transparent 2px, transparent 15px, #fff 15px, transparent 15px, transparent 30px, #fff 30px, transparent 30px),
+        linear-gradient(180deg, #fff 2px, transparent 2px, transparent 15px, #fff 15px, transparent 15px, transparent 32px);
+    background-size: 32px 16px;
+    box-shadow: inset 0 0 4px #600;
+}
+.player {
+    color: #0f0;
+    font-weight: bold;
+}
+.exit {
+    color: #ff0;
+    font-weight: bold;
+}
+
+#instructions {
+    font-size: 0.8em;
+}
+
+#levelDisplay {
+    font-size:1.3em; 
+    margin-bottom:10px;
+}
