@@ -71,7 +71,7 @@ function renderMaze() {
         container.appendChild(rowDiv);
     }
     // Update level display
-    const levelDisplay = document.getElementById('level-display');
+    const levelDisplay = document.getElementById('levelDisplay');
     if (levelDisplay) {
         levelDisplay.textContent = 'Level: ' + level;
     }
